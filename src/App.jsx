@@ -21,6 +21,7 @@ const getRandomNumber = (min, max) => {
 };
 
 const countdownTime = 30;
+const dotSize = 75;
 
 function App() {
   const dimensionRef = useRef();
@@ -33,11 +34,11 @@ function App() {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
-    //when game is first rendered, put box in the center of its container
+    //when game is first rendered, put dot in the center of its container
     if (dimensions && !isRunning) {
       onOpen();
-      const centerTop = dimensions.contentBox.height / 2 - 37.5; //75px box, half to center
-      const centerLeft = dimensions.contentBox.width / 2 - 37.5; //75px box, half to center
+      const centerTop = dimensions.contentBox.height / 2 - dotSize / 2; //subtract half of dot size to maintain center
+      const centerLeft = dimensions.contentBox.width / 2 - dotSize / 2;
       setButtonTop(centerTop);
       setButtonLeft(centerLeft);
 
@@ -56,30 +57,27 @@ function App() {
       }
     },
     isRunning ? 1000 : null
-  );
+  ); //every second decrement the countdown timer
 
   const onModalClose = () => {
+    //when modal closes, restart the game at initial conditions
     setCount(0);
     setCountdown(countdownTime);
     setIsRunning(true);
-    setButtonTop(getRandomNumber(75, dimensions.contentBox.height - 75));
+    setButtonTop(getRandomNumber(75, dimensions.contentBox.height - 75)); //set to a new random location
     setButtonLeft(getRandomNumber(75, dimensions.contentBox.width - 75));
-    onClose();
+    onClose(); //close modal after reset of game state is complete
   };
 
   const onPoke = () => {
-    // if (countdown === countdownTime && !isRunning) {
-    //   setIsRunning(true);
-    // }
-
     if (countdown < 1) {
-      setIsRunning(false);
-      onOpen();
+      setIsRunning(false); //stop timer
+      onOpen(); // open model to display results and play again
     } else {
       setButtonTop(getRandomNumber(75, dimensions.contentBox.height - 75));
       setButtonLeft(getRandomNumber(75, dimensions.contentBox.width - 75));
-
-      setCount((count) => count + 1);
+      //move dot to a new random location
+      setCount((count) => count + 1); //increment the poke counter
     }
   };
 
@@ -120,6 +118,7 @@ function App() {
                 buttonLeft={buttonLeft}
                 onPoke={onPoke}
                 count={count}
+                dotSize={dotSize}
               />
             ) : null}
           </Box>

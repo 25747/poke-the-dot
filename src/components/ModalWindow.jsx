@@ -6,9 +6,6 @@ import {
   ModalHeader,
   ModalOverlay,
   ModalBody,
-  useDisclosure,
-  Box,
-  Container,
   Text,
 } from "@chakra-ui/react";
 
@@ -21,7 +18,7 @@ const ModalWindow = ({ count = 0, onModalClose, isOpen }) => {
           {count === 0 ? "Ready to Play?" : "Play Again!"}
         </ModalHeader>
         <ModalBody>
-          {count === 0 ? (
+          {count === 0 ? ( //if count===0, assume starting the game fresh
             <>
               <Text align="center">
                 How many times can you poke the dot in 30 seconds?
@@ -32,6 +29,7 @@ const ModalWindow = ({ count = 0, onModalClose, isOpen }) => {
               </Text>
             </>
           ) : (
+            //if count !=0, assume 'play again'
             <>
               <Text align="center">
                 You poked the dot <strong>{count}</strong> times!

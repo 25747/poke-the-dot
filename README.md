@@ -1,6 +1,7 @@
 # poke-the-dot
 
-A game for my three-year-old, made in less than a day
+A game for my three-year-old, made in less than a day.
+
 See current build here: https://25747.github.io
 
 ## Libraries used

@@ -5,7 +5,7 @@ See current build here: https://25747.github.io
 
 ## Libraries used
 
-Chakra UI, one of my favorite React UI libraries. Simple, effective components, with plenty of customizability.
+Chakra UI, one of my favorite React UI libraries. Simple, effective components, with plenty of customizability. For the current state of the game a UI framework is almost certainly overkill, but Chakra is so nice to use and it doesn't add too much unneeded complexity.
 
 Vite, newer build/bundler tool, alternative to webpack. I haven't used it before, but heard great things. I was blown away with the build speed, both in development and when doing a production build. Dev builds happened in as little as a quarter second. Production builds in under 5 seconds.
 

@@ -19,6 +19,8 @@ import ModalWindow from "./components/ModalWindow";
 import bubbleSound from "./sounds/bubble.wav"; //https://freesound.org/people/Ranner/sounds/487532/
 import cheerSound from "./sounds/cheer.wav"; //https://freesound.org/people/Tomlija/sounds/99634/
 import bellSound from "./sounds/bell.wav"; //https://freesound.org/people/Herkules92/sounds/520998/
+import Header from "./components/Header";
+import GameBody from "./components/GameBody";
 
 const getRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
@@ -97,7 +99,6 @@ function App() {
     <>
       <Container centerContent>
         <VStack
-          //as="Box"
           border="5px"
           borderColor="red.500"
           position="fixed"
@@ -106,34 +107,15 @@ function App() {
           maxW="4xl"
           spacing={0}
         >
-          <HStack
-            position="relative"
-            justify="center"
-            w="100%"
-            h="5%"
-            bgColor="orange.100"
-            spacing={8}
-          >
-            <Text fontSize="18px">Poke the Dot</Text>
-            <Text fontSize="18px">Time Left: {countdown}</Text>
-          </HStack>
-          <Box
-            ref={dimensionRef}
-            position="relative"
-            w="100%"
-            h="95%"
-            bgColor="purple.100"
-          >
-            {buttonTop > 0 && buttonLeft > 0 ? ( //only render once dimensions are found and center values set
-              <PokeButton
-                buttonTop={buttonTop}
-                buttonLeft={buttonLeft}
-                onPoke={onPoke}
-                count={count}
-                dotSize={dotSize}
-              />
-            ) : null}
-          </Box>
+          <Header countdown={countdown} />
+          <GameBody
+            buttonTop={buttonTop}
+            buttonLeft={buttonLeft}
+            onPoke={onPoke}
+            count={count}
+            dotSize={dotSize}
+            dimensionRef={dimensionRef}
+          />
         </VStack>
       </Container>
       <ModalWindow

@@ -35,8 +35,8 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const { isOpen, onClose, onOpen } = useDisclosure(); // simple chakra utility for managing modal visibility
   const [playBubble] = useSound(bubbleSound);
-  const [playCheer] = useSound(cheerSound);
-  const [playBell] = useSound(bellSound);
+  const [playCheer] = useSound(cheerSound, { volume: 0.5 });
+  const [playBell] = useSound(bellSound, { volume: 0.5 });
 
   //https://chakra-ui.com/docs/styled-system/utility-hooks/use-dimensions
   const dimensionRef = useRef(); // ref applied to the <Box/> component

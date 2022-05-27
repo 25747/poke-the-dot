@@ -23,12 +23,12 @@ to launch dev server
 
 ## Future TODOs
 
-still plenty of refactoring opportunity; can move some of the functions/hooks in App.jsx into separate files
+- still plenty of refactoring opportunity; can move some of the functions/hooks in App.jsx into separate files
 
-spruce up UI
+- spruce up UI
 
-use localhost to save high scores
+- use localhost to save high scores
 
-add difficulty
--dots move after certain time
--extra shapes that should not be pushed
+- add difficulty
+  - dots move after certain time
+  - extra shapes that should not be pushed

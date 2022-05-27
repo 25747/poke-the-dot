@@ -1,4 +1,5 @@
 import { Circle, Text } from "@chakra-ui/react";
+import useSound from "use-sound";
 
 const PokeButton = ({
   buttonTop = 0,

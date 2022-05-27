@@ -12,42 +12,51 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
+import useSound from "use-sound";
 import PokeButton from "./components/PokeButton";
 import useInterval from "./hooks/useInterval";
 import ModalWindow from "./components/ModalWindow";
+import bubbleSound from "./sounds/bubble.wav"; //https://freesound.org/people/Ranner/sounds/487532/
+import cheerSound from "./sounds/cheer.wav"; //https://freesound.org/people/Tomlija/sounds/99634/
+import bellSound from "./sounds/bell.wav"; //https://freesound.org/people/Herkules92/sounds/520998/
 
 const getRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-const countdownTime = 30;
-const dotSize = 75;
+const countdownTime = 15; //time in seconds
+const dotSize = 75; //size of dot in px
 
 function App() {
-  const dimensionRef = useRef();
-  const dimensions = useDimensions(dimensionRef);
   const [buttonTop, setButtonTop] = useState(0);
   const [buttonLeft, setButtonLeft] = useState(0);
   const [count, setCount] = useState(0);
   const [countdown, setCountdown] = useState(countdownTime);
   const [isRunning, setIsRunning] = useState(false);
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const { isOpen, onClose, onOpen } = useDisclosure(); // simple chakra utility for managing modal visibility
+  const [playBubble] = useSound(bubbleSound);
+  const [playCheer] = useSound(cheerSound);
+  const [playBell] = useSound(bellSound);
+
+  //https://chakra-ui.com/docs/styled-system/utility-hooks/use-dimensions
+  const dimensionRef = useRef(); // ref applied to the <Box/> component
+  const dimensions = useDimensions(dimensionRef);
 
   useEffect(() => {
     //when game is first rendered, put dot in the center of its container
     if (dimensions && !isRunning) {
+      if (count > 0) playCheer();
       onOpen();
       const centerTop = dimensions.contentBox.height / 2 - dotSize / 2; //subtract half of dot size to maintain center
       const centerLeft = dimensions.contentBox.width / 2 - dotSize / 2;
       setButtonTop(centerTop);
       setButtonLeft(centerLeft);
-
-      console.log(dimensions);
     }
   }, [dimensions, isRunning]); //re-run if dimensions change, or if isRunning changes.
-  //note that dimensions value will not change as i am not listening for window resize
+  //note that dimensions value is not expected to change as i am not listening for window resize
 
   useInterval(
+    //inspired by dan abramov - see implementation
     () => {
       if (countdown > 1) {
         setCountdown((cd) => cd - 1);
@@ -66,13 +75,16 @@ function App() {
     setIsRunning(true);
     setButtonTop(getRandomNumber(75, dimensions.contentBox.height - 75)); //set to a new random location
     setButtonLeft(getRandomNumber(75, dimensions.contentBox.width - 75));
+    playBell();
     onClose(); //close modal after reset of game state is complete
   };
 
   const onPoke = () => {
+    playBubble();
     if (countdown < 1) {
+      // open model to display results and play again
       setIsRunning(false); //stop timer
-      onOpen(); // open model to display results and play again
+      onOpen();
     } else {
       setButtonTop(getRandomNumber(75, dimensions.contentBox.height - 75));
       setButtonLeft(getRandomNumber(75, dimensions.contentBox.width - 75));
@@ -85,7 +97,7 @@ function App() {
     <>
       <Container centerContent>
         <VStack
-          as="Box"
+          //as="Box"
           border="5px"
           borderColor="red.500"
           position="fixed"
@@ -124,7 +136,12 @@ function App() {
           </Box>
         </VStack>
       </Container>
-      <ModalWindow isOpen={isOpen} onModalClose={onModalClose} count={count} />
+      <ModalWindow
+        isOpen={isOpen}
+        onModalClose={onModalClose}
+        count={count}
+        countdownTime={countdownTime}
+      />
     </>
   );
 }

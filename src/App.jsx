@@ -36,6 +36,7 @@ function App() {
   const [countdown, setCountdown] = useState(countdownTime);
   const [isRunning, setIsRunning] = useState(false);
   const { isOpen, onClose, onOpen } = useDisclosure(); // simple chakra utility for managing modal visibility
+  const [isMute, setIsMute] = useState(false);
   const [playBubble] = useSound(bubbleSound);
   const [playCheer] = useSound(cheerSound, { volume: 0.5 });
   const [playBell] = useSound(bellSound, { volume: 0.5 });
@@ -47,7 +48,9 @@ function App() {
   useEffect(() => {
     //when game is first rendered, put dot in the center of its container
     if (dimensions && !isRunning) {
-      if (count > 0) playCheer();
+      if (count > 0 && !isMute) {
+        playCheer();
+      }
       onOpen();
       const centerTop = dimensions.contentBox.height / 2 - dotSize / 2; //subtract half of dot size to maintain center
       const centerLeft = dimensions.contentBox.width / 2 - dotSize / 2;
@@ -77,12 +80,17 @@ function App() {
     setIsRunning(true);
     setButtonTop(getRandomNumber(75, dimensions.contentBox.height - 75)); //set to a new random location
     setButtonLeft(getRandomNumber(75, dimensions.contentBox.width - 75));
-    playBell();
+    if (!isMute) {
+      playBell();
+    }
     onClose(); //close modal after reset of game state is complete
   };
 
   const onPoke = () => {
-    playBubble();
+    if (!isMute) {
+      playBubble();
+    }
+
     if (countdown < 1) {
       // open model to display results and play again
       setIsRunning(false); //stop timer
@@ -107,7 +115,7 @@ function App() {
           maxW="4xl"
           spacing={0}
         >
-          <Header countdown={countdown} />
+          <Header countdown={countdown} isMute={isMute} setIsMute={setIsMute} />
           <GameBody
             buttonTop={buttonTop}
             buttonLeft={buttonLeft}
@@ -123,6 +131,8 @@ function App() {
         onModalClose={onModalClose}
         count={count}
         countdownTime={countdownTime}
+        isMute={isMute}
+        setIsMute={setIsMute}
       />
     </>
   );

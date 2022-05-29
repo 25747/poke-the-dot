@@ -16,8 +16,6 @@ const ModalWindow = ({
   onModalClose = () => {},
   isOpen = true,
   countdownTime = 30,
-  isMute = false,
-  setIsMute,
 }) => {
   return (
     <Modal isOpen={isOpen}>
@@ -25,7 +23,7 @@ const ModalWindow = ({
       <ModalContent>
         <ModalHeader display="flex" justifyContent="space-between">
           {count === 0 ? "Ready to Play?" : "Play Again!"}
-          <MuteButton isMute={isMute} setIsMute={setIsMute} />
+          <MuteButton />
         </ModalHeader>
         <ModalBody>
           {count === 0 ? ( //if count===0, assume starting the game fresh

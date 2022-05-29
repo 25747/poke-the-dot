@@ -1,8 +1,7 @@
-import { HStack, IconButton, Text } from "@chakra-ui/react";
-import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+import { HStack, Text } from "@chakra-ui/react";
 import MuteButton from "./MuteButton";
 
-const Header = ({ countdown = 0, isMute = false, setIsMute }) => {
+const Header = ({ countdown = 0 }) => {
   return (
     <HStack
       position="relative"
@@ -14,7 +13,7 @@ const Header = ({ countdown = 0, isMute = false, setIsMute }) => {
     >
       <Text fontSize="18px">Poke the Dot</Text>
       <Text fontSize="18px">Time Left: {countdown}</Text>
-      <MuteButton isMute={isMute} setIsMute={setIsMute} />
+      <MuteButton />
     </HStack>
   );
 };

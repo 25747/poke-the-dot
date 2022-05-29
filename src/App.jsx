@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   Box,
   Center,
@@ -21,6 +21,7 @@ import cheerSound from "./sounds/cheer.wav"; //https://freesound.org/people/Toml
 import bellSound from "./sounds/bell.wav"; //https://freesound.org/people/Herkules92/sounds/520998/
 import Header from "./components/Header";
 import GameBody from "./components/GameBody";
+import { SettingsContext } from "./contexts/SettingsContext";
 
 const getRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
@@ -36,7 +37,7 @@ function App() {
   const [countdown, setCountdown] = useState(countdownTime);
   const [isRunning, setIsRunning] = useState(false);
   const { isOpen, onClose, onOpen } = useDisclosure(); // simple chakra utility for managing modal visibility
-  const [isMute, setIsMute] = useState(false);
+  const { soundOn } = useContext(SettingsContext);
   const [playBubble] = useSound(bubbleSound);
   const [playCheer] = useSound(cheerSound, { volume: 0.5 });
   const [playBell] = useSound(bellSound, { volume: 0.5 });
@@ -46,9 +47,13 @@ function App() {
   const dimensions = useDimensions(dimensionRef);
 
   useEffect(() => {
+    console.log("context", soundOn);
+  }, [soundOn]);
+
+  useEffect(() => {
     //when game is first rendered, put dot in the center of its container
     if (dimensions && !isRunning) {
-      if (count > 0 && !isMute) {
+      if (count > 0 && soundOn) {
         playCheer();
       }
       onOpen();
@@ -80,14 +85,14 @@ function App() {
     setIsRunning(true);
     setButtonTop(getRandomNumber(75, dimensions.contentBox.height - 75)); //set to a new random location
     setButtonLeft(getRandomNumber(75, dimensions.contentBox.width - 75));
-    if (!isMute) {
+    if (soundOn) {
       playBell();
     }
     onClose(); //close modal after reset of game state is complete
   };
 
   const onPoke = () => {
-    if (!isMute) {
+    if (soundOn) {
       playBubble();
     }
 
@@ -115,7 +120,7 @@ function App() {
           maxW="4xl"
           spacing={0}
         >
-          <Header countdown={countdown} isMute={isMute} setIsMute={setIsMute} />
+          <Header countdown={countdown} />
           <GameBody
             buttonTop={buttonTop}
             buttonLeft={buttonLeft}
@@ -131,8 +136,6 @@ function App() {
         onModalClose={onModalClose}
         count={count}
         countdownTime={countdownTime}
-        isMute={isMute}
-        setIsMute={setIsMute}
       />
     </>
   );

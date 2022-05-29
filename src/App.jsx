@@ -107,15 +107,7 @@ function App() {
   return (
     <>
       <Container centerContent>
-        <VStack
-          border="5px"
-          borderColor="red.500"
-          position="fixed"
-          height="100%"
-          w="100%"
-          maxW="4xl"
-          spacing={0}
-        >
+        <VStack position="fixed" height="100%" w="100%" maxW="4xl" spacing={0}>
           <Header countdown={countdown} />
           <GameBody
             buttonTop={buttonTop}

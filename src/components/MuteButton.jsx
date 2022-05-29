@@ -5,7 +5,6 @@ import { SettingsContext } from "../contexts/SettingsContext";
 
 const MuteButton = () => {
   const { soundOn, setSoundOn } = React.useContext(SettingsContext);
-  console.log("mutebutton soundon", soundOn);
   return (
     <IconButton
       aria-label="volume on or off"

@@ -47,10 +47,6 @@ function App() {
   const dimensions = useDimensions(dimensionRef);
 
   useEffect(() => {
-    console.log("context", soundOn);
-  }, [soundOn]);
-
-  useEffect(() => {
     //when game is first rendered, put dot in the center of its container
     if (dimensions && !isRunning) {
       if (count > 0 && soundOn) {

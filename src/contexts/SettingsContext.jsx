@@ -1,18 +1,18 @@
 import React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-const soundKey = "pokeSoundOn";
+const soundKey = "pokesoundEnabled";
 
 const SettingsContext = React.createContext();
 
-const SettingsContextProvider = ({ children }) => {
-  const [soundOn, setSoundOn] = useLocalStorage(soundKey, false);
+const SettingsProvider = ({ children }) => {
+  const [soundEnabled, setsoundEnabled] = useLocalStorage(soundKey, false);
 
   return (
-    <SettingsContext.Provider value={{ soundOn, setSoundOn }}>
+    <SettingsContext.Provider value={{ soundEnabled, setsoundEnabled }}>
       {children}
     </SettingsContext.Provider>
   );
 };
 
-export { SettingsContext, SettingsContextProvider };
+export { SettingsContext, SettingsProvider };

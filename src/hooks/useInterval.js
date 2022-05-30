@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 export default (callback, delay) => {
   const intervalRef = React.useRef(null);
   const savedCallback = React.useRef(callback);

@@ -1,27 +1,14 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import * as React from "react";
 import {
-  Box,
-  Center,
   Container,
-  Flex,
-  HStack,
-  Spacer,
-  Square,
-  Text,
   useDimensions,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import useSound from "use-sound";
-import PokeButton from "./components/PokeButton";
 import useInterval from "./hooks/useInterval";
 import ModalWindow from "./components/ModalWindow";
-import bubbleSound from "./sounds/bubble.wav"; //https://freesound.org/people/Ranner/sounds/487532/
-import cheerSound from "./sounds/cheer.wav"; //https://freesound.org/people/Tomlija/sounds/99634/
-import bellSound from "./sounds/bell.wav"; //https://freesound.org/people/Herkules92/sounds/520998/
 import Header from "./components/Header";
 import GameBody from "./components/GameBody";
-import { SettingsContext } from "./contexts/SettingsContext";
 import { SoundsContext } from "./contexts/SoundsContext";
 
 const getRandomNumber = (min, max) => {
@@ -32,23 +19,20 @@ const countdownTime = 15; //time in seconds
 const dotSize = 75; //size of dot in px
 
 function App() {
-  const [buttonTop, setButtonTop] = useState(0);
-  const [buttonLeft, setButtonLeft] = useState(0);
-  const [count, setCount] = useState(0);
-  const [countdown, setCountdown] = useState(countdownTime);
-  const [isRunning, setIsRunning] = useState(false);
+  const [buttonTop, setButtonTop] = React.useState(0);
+  const [buttonLeft, setButtonLeft] = React.useState(0);
+  const [count, setCount] = React.useState(0);
+  const [countdown, setCountdown] = React.useState(countdownTime);
+  const [isRunning, setIsRunning] = React.useState(false);
   const { isOpen, onClose, onOpen } = useDisclosure(); // simple chakra utility for managing modal visibility
-  const { soundEnabled } = useContext(SettingsContext);
-  const { playBubble, playCheer, playBell } = useContext(SoundsContext);
-  // const [playBubble] = useSound(bubbleSound);
-  // const [playCheer] = useSound(cheerSound, { volume: 0.5 });
-  // const [playBell] = useSound(bellSound, { volume: 0.5 });
+  const { playBubble, playCheer, playBell, soundEnabled } =
+    React.useContext(SoundsContext);
 
   //https://chakra-ui.com/docs/styled-system/utility-hooks/use-dimensions
-  const dimensionRef = useRef(); // ref applied to the <Box/> component
+  const dimensionRef = React.useRef(); // ref applied to the <Box/> component
   const dimensions = useDimensions(dimensionRef);
 
-  useEffect(() => {
+  React.useEffect(() => {
     //when game is first rendered, put dot in the center of its container
     if (dimensions && !isRunning) {
       if (count > 0 && soundEnabled) {
@@ -64,7 +48,6 @@ function App() {
   //note that dimensions value is not expected to change as i am not listening for window resize
 
   useInterval(
-    //inspired by dan abramov - see implementation
     () => {
       if (countdown > 1) {
         setCountdown((cd) => cd - 1);
@@ -81,8 +64,12 @@ function App() {
     setCount(0);
     setCountdown(countdownTime);
     setIsRunning(true);
-    setButtonTop(getRandomNumber(75, dimensions.contentBox.height - 75)); //set to a new random location
-    setButtonLeft(getRandomNumber(75, dimensions.contentBox.width - 75));
+    setButtonTop(
+      getRandomNumber(0 /* 75 */, dimensions.contentBox.height - dotSize)
+    ); //set to a new random location
+    setButtonLeft(
+      getRandomNumber(0 /* 75 */, dimensions.contentBox.width - dotSize)
+    );
     if (soundEnabled) {
       playBell();
     }
@@ -99,8 +86,12 @@ function App() {
       setIsRunning(false); //stop timer
       onOpen();
     } else {
-      setButtonTop(getRandomNumber(75, dimensions.contentBox.height - 75));
-      setButtonLeft(getRandomNumber(75, dimensions.contentBox.width - 75));
+      setButtonTop(
+        getRandomNumber(0 /* 75 */, dimensions.contentBox.height - dotSize)
+      );
+      setButtonLeft(
+        getRandomNumber(0 /* 75 */, dimensions.contentBox.width - dotSize)
+      );
       //move dot to a new random location
       setCount((count) => count + 1); //increment the poke counter
     }

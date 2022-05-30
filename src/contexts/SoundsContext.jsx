@@ -1,15 +1,17 @@
 import * as React from "react";
 import useSound from "use-sound";
+import useLocalStorage from "../hooks/useLocalStorage";
 import bubbleSound from "../sounds/bubble.wav";
 import cheerSound from "../sounds/cheer.wav";
 import bellSound from "../sounds/bell.wav";
-import { SettingsContext } from "./SettingsContext";
+
+const soundKey = "pokesoundEnabled";
 
 const SoundsContext = React.createContext();
 
 const SoundsProvider = ({ children }) => {
+  const [soundEnabled, setsoundEnabled] = useLocalStorage(soundKey, false);
   const [bubblePlayback, setBubblePlayback] = React.useState(0.75);
-  const { soundEnabled } = React.useContext(SettingsContext);
   const [playBubble, { stop: stopBubble }] = useSound(bubbleSound, {
     soundEnabled,
     playbackRate: bubblePlayback,
@@ -34,7 +36,14 @@ const SoundsProvider = ({ children }) => {
 
   return (
     <SoundsContext.Provider
-      value={{ playBubble, playCheer, playBell, setBubblePlayback }}
+      value={{
+        playBubble,
+        playCheer,
+        playBell,
+        setBubblePlayback,
+        soundEnabled,
+        setsoundEnabled,
+      }}
     >
       {children}
     </SoundsContext.Provider>

@@ -1,5 +1,4 @@
 import { Circle, Text } from "@chakra-ui/react";
-import useSound from "use-sound";
 
 const PokeButton = ({
   buttonTop = 0,
@@ -19,7 +18,7 @@ const PokeButton = ({
       bg="orange.400"
       style={{ touchAction: "none" }}
     >
-      <Text fontSize="25px" color="white" style={{ userSelect: "none" }}>
+      <Text fontSize="25px" color="white" userSelect="none">
         {count}
       </Text>
     </Circle>

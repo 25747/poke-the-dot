@@ -22,6 +22,7 @@ import bellSound from "./sounds/bell.wav"; //https://freesound.org/people/Herkul
 import Header from "./components/Header";
 import GameBody from "./components/GameBody";
 import { SettingsContext } from "./contexts/SettingsContext";
+import { SoundsContext } from "./contexts/SoundsContext";
 
 const getRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
@@ -37,10 +38,11 @@ function App() {
   const [countdown, setCountdown] = useState(countdownTime);
   const [isRunning, setIsRunning] = useState(false);
   const { isOpen, onClose, onOpen } = useDisclosure(); // simple chakra utility for managing modal visibility
-  const { soundOn } = useContext(SettingsContext);
-  const [playBubble] = useSound(bubbleSound);
-  const [playCheer] = useSound(cheerSound, { volume: 0.5 });
-  const [playBell] = useSound(bellSound, { volume: 0.5 });
+  const { soundEnabled } = useContext(SettingsContext);
+  const { playBubble, playCheer, playBell } = useContext(SoundsContext);
+  // const [playBubble] = useSound(bubbleSound);
+  // const [playCheer] = useSound(cheerSound, { volume: 0.5 });
+  // const [playBell] = useSound(bellSound, { volume: 0.5 });
 
   //https://chakra-ui.com/docs/styled-system/utility-hooks/use-dimensions
   const dimensionRef = useRef(); // ref applied to the <Box/> component
@@ -49,7 +51,7 @@ function App() {
   useEffect(() => {
     //when game is first rendered, put dot in the center of its container
     if (dimensions && !isRunning) {
-      if (count > 0 && soundOn) {
+      if (count > 0 && soundEnabled) {
         playCheer();
       }
       onOpen();
@@ -81,14 +83,14 @@ function App() {
     setIsRunning(true);
     setButtonTop(getRandomNumber(75, dimensions.contentBox.height - 75)); //set to a new random location
     setButtonLeft(getRandomNumber(75, dimensions.contentBox.width - 75));
-    if (soundOn) {
+    if (soundEnabled) {
       playBell();
     }
     onClose(); //close modal after reset of game state is complete
   };
 
   const onPoke = () => {
-    if (soundOn) {
+    if (soundEnabled) {
       playBubble();
     }
 

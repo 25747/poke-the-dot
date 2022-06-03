@@ -3,9 +3,10 @@ import { Box, useDimensions } from "@chakra-ui/react";
 import PokeButton from "./PokeButton";
 
 const GameBody = () => {
-  //https://chakra-ui.com/docs/styled-system/utility-hooks/use-dimensions
   const dimensionRef = React.useRef(); // ref applied to the <Box/> component
   const dimensions = useDimensions(dimensionRef);
+  //https://chakra-ui.com/docs/styled-system/utility-hooks/use-dimensions
+
   return (
     <Box
       ref={dimensionRef}

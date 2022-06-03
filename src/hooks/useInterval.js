@@ -15,4 +15,4 @@ export default (callback, delay) => {
   return intervalRef;
 };
 //inspired by dan abramov's useInterval https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-//https://www.joshwcomeau.com/snippets/react-hooks/use-interval/
+//updated from https://www.joshwcomeau.com/snippets/react-hooks/use-interval/

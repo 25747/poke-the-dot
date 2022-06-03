@@ -11,18 +11,18 @@ const SoundsContext = React.createContext();
 
 const SoundsProvider = ({ children }) => {
   const [soundEnabled, setsoundEnabled] = useLocalStorage(soundKey, false);
-  const [bubblePlayback, setBubblePlayback] = React.useState(0.75);
+  const [bubblePlayback, setBubblePlayback] = React.useState(0.5);
   const [playBubble, { stop: stopBubble }] = useSound(bubbleSound, {
     soundEnabled,
     playbackRate: bubblePlayback,
   });
   const [playCheer, { stop: stopCheer }] = useSound(cheerSound, {
     soundEnabled,
-    volume: 0.5,
+    volume: 0.2,
   });
   const [playBell, { stop: stopBell }] = useSound(bellSound, {
     soundEnabled,
-    volume: 0.5,
+    volume: 0.1,
   });
 
   // if soundEnabled changed to false, stop sounds immediately

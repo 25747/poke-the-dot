@@ -1,14 +1,11 @@
-import { Box } from "@chakra-ui/react";
+import * as React from "react";
+import { Box, useDimensions } from "@chakra-ui/react";
 import PokeButton from "./PokeButton";
 
-const GameBody = ({
-  dimensionRef,
-  buttonTop,
-  buttonLeft,
-  onPoke,
-  count,
-  dotSize,
-}) => {
+const GameBody = () => {
+  //https://chakra-ui.com/docs/styled-system/utility-hooks/use-dimensions
+  const dimensionRef = React.useRef(); // ref applied to the <Box/> component
+  const dimensions = useDimensions(dimensionRef);
   return (
     <Box
       ref={dimensionRef}
@@ -17,14 +14,8 @@ const GameBody = ({
       h="95%"
       bgColor="purple.100"
     >
-      {buttonTop > 0 && buttonLeft > 0 ? ( //only render once dimensions are found and center values set
-        <PokeButton
-          buttonTop={buttonTop}
-          buttonLeft={buttonLeft}
-          onPoke={onPoke}
-          count={count}
-          dotSize={dotSize}
-        />
+      {dimensions ? ( //only render once dimensions exists
+        <PokeButton dimensions={dimensions} />
       ) : null}
     </Box>
   );

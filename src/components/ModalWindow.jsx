@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Button,
   Modal,
@@ -7,16 +8,44 @@ import {
   ModalOverlay,
   ModalBody,
   Text,
-  Spacer,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { GameStateContext } from "../contexts/GameStateContext";
+import { SoundsContext } from "../contexts/SoundsContext";
 import MuteButton from "./MuteButton";
 
-const ModalWindow = ({
-  count = 0,
-  onModalClose = () => {},
-  isOpen = true,
-  countdownTime = 30,
-}) => {
+const ModalWindow = () => {
+  const { isOpen, onClose, onOpen } = useDisclosure(); // simple chakra utility for managing modal visibility
+  const { playCheer, playBell, soundEnabled } = React.useContext(SoundsContext);
+  const {
+    count,
+    setCount,
+    setCountdown,
+    isRunning,
+    setIsRunning,
+    countdownTime,
+  } = React.useContext(GameStateContext);
+
+  React.useEffect(() => {
+    if (!isRunning) {
+      if (count > 0 && soundEnabled) {
+        playCheer();
+      }
+      onOpen();
+    } else if (soundEnabled) playBell();
+  }, [isRunning]);
+
+  const onModalClose = () => {
+    //when modal closes, restart the game at initial conditions
+    setCount(0);
+    setCountdown(countdownTime);
+    setIsRunning(true);
+    if (soundEnabled) {
+      playBell();
+    }
+    onClose(); //close modal after reset of game state is complete
+  };
+
   return (
     <Modal isOpen={isOpen}>
       <ModalOverlay />

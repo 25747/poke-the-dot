@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Button,
   Modal,
@@ -7,18 +8,28 @@ import {
   ModalOverlay,
   ModalBody,
   Text,
-  Spacer,
 } from "@chakra-ui/react";
+import { GameStateContext } from "../contexts/GameStateContext";
 import MuteButton from "./MuteButton";
 
-const ModalWindow = ({
-  count = 0,
-  onModalClose = () => {},
-  isOpen = true,
-  countdownTime = 30,
-}) => {
+const ModalWindow = () => {
+  const {
+    count,
+    setCount,
+    setCountdown,
+    isRunning,
+    setIsRunning,
+    countdownTime,
+  } = React.useContext(GameStateContext);
+
+  const onModalClose = () => {
+    setCount(0);
+    setCountdown(countdownTime);
+    setIsRunning(true);
+  }; //restart the game at initial conditions
+
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={!isRunning}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader display="flex" justifyContent="space-between">

@@ -1,19 +1,19 @@
-import React from "react";
+import * as React from "react";
 import ReactDOM from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import App from "./App";
 import "./index.css";
-import { SettingsProvider } from "./contexts/SettingsContext";
 import { SoundsProvider } from "./contexts/SoundsContext";
+import { GameStateProvider } from "./contexts/GameStateContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider>
-      <SettingsProvider>
-        <SoundsProvider>
+      <SoundsProvider>
+        <GameStateProvider>
           <App />
-        </SoundsProvider>
-      </SettingsProvider>
+        </GameStateProvider>
+      </SoundsProvider>
     </ChakraProvider>
   </React.StrictMode>
 );

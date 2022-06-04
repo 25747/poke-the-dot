@@ -13,6 +13,8 @@ const Header = () => {
       h="5%"
       bgColor="orange.100"
       spacing={8}
+      borderBottomWidth="1px"
+      borderColor="orange.600"
     >
       <Text fontSize="18px">Poke the Dot</Text>
       <Text fontSize="18px">Time Left: {countdown}</Text>

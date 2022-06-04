@@ -8,6 +8,8 @@ import {
   ModalOverlay,
   ModalBody,
   Text,
+  Spacer,
+  Box,
 } from "@chakra-ui/react";
 import { GameStateContext } from "../contexts/GameStateContext";
 import MuteButton from "./MuteButton";
@@ -31,9 +33,14 @@ const ModalWindow = () => {
   return (
     <Modal isOpen={!isRunning}>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader display="flex" justifyContent="space-between">
-          {count === 0 ? "Ready to Play?" : "Play Again!"}
+      <ModalContent bg="gray.200">
+        <ModalHeader
+          display="flex"
+          align="center"
+          justifyContent="space-around"
+        >
+          <Box w="40px" />
+          <Text>{count === 0 ? "Ready to Play?" : "Play Again!"}</Text>
           <MuteButton />
         </ModalHeader>
         <ModalBody>

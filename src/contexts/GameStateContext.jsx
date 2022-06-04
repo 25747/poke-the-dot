@@ -33,7 +33,7 @@ const GameStateProvider = ({ children }) => {
       }
     } else if (soundEnabled) playBell();
   }, [isRunning]);
-  //thought it was simplest to just control start/stop sounds here, since they are based on gamestate
+  //thought it was simplest to just control the begin/end sounds here, since they are based on gamestate
 
   return (
     <GameStateContext.Provider

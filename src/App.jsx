@@ -8,7 +8,15 @@ function App() {
   return (
     <>
       <Container centerContent overflow="hidden">
-        <VStack position="fixed" height="100%" w="100%" maxW="4xl" spacing={0}>
+        <VStack
+          position="fixed"
+          height="100%"
+          w="100%"
+          maxW="4xl"
+          spacing={0}
+          borderWidth="1px"
+          borderColor="purple.700"
+        >
           <Header />
           <GameBody />
         </VStack>

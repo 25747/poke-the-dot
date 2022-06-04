@@ -5,13 +5,18 @@ import { SoundsContext } from "../contexts/SoundsContext";
 import getRandomNumber from "../utils/getRandomNumber";
 
 const PokeButton = ({ dimensions }) => {
-  const [buttonTop, setButtonTop] = React.useState(0);
-  const [buttonLeft, setButtonLeft] = React.useState(0);
   const { count, setCount, countdown, isRunning, setIsRunning, dotSize } =
     React.useContext(GameStateContext);
-
   const { playBubble, setBubblePlayback, soundEnabled } =
     React.useContext(SoundsContext);
+
+  const [buttonTop, setButtonTop] = React.useState(
+    (dimensions.contentBox.height - dotSize) / 2
+  );
+  const [buttonLeft, setButtonLeft] = React.useState(
+    (dimensions.contentBox.width - dotSize) / 2
+  );
+  //initialize bubble at center of game body
 
   React.useEffect(() => {
     if (dimensions && !isRunning) {

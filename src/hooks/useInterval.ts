@@ -1,6 +1,6 @@
 import * as React from "react";
-export default (callback, delay) => {
-  const intervalRef = React.useRef(null);
+export default (callback: ()=>void, delay: number | null) => {
+  const intervalRef = React.useRef< null | NodeJS.Timeout | number >(null);
   const savedCallback = React.useRef(callback);
   React.useEffect(() => {
     savedCallback.current = callback;
@@ -9,7 +9,11 @@ export default (callback, delay) => {
     const tick = () => savedCallback.current();
     if (typeof delay === "number") {
       intervalRef.current = window.setInterval(tick, delay);
-      return () => window.clearInterval(intervalRef.current);
+      return () => {
+        if (intervalRef.current !== null) {
+          return clearInterval(intervalRef.current);
+      }
+      };
     }
   }, [delay]);
   return intervalRef;

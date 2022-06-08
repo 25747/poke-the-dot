@@ -1,9 +1,9 @@
 # poke-the-dot
 
-A game for my three-year-old, first version made in less than a day.
+A game for my three-year-old, first version made in less than a day. Built for mobile, but usable on desktop browsers.
 See current build here: https://25747.github.io
 
-Started in Javascript and then converted to Typescript (my first TS project)
+Started in Javascript and then converted to Typescript as a way to learn TS.
 
 ## Libraries used
 

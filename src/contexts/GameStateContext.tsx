@@ -1,18 +1,34 @@
 import * as React from "react";
+import { Dispatch } from "react";
 import useInterval from "../hooks/useInterval";
 import { SoundsContext } from "./SoundsContext";
 
-const GameStateContext = React.createContext();
+interface GameStateInterface {
+  count: number,
+  setCount: Dispatch<React.SetStateAction<number>>,
+  countdown: number,
+  setCountdown: Dispatch<React.SetStateAction<number>>,
+  isRunning: boolean,
+  setIsRunning: Dispatch<React.SetStateAction<boolean>>,
+  countdownTime: number,
+  dotSize: number,
+}
+
+type Props = {
+  children?: React.ReactNode
+};
+
+const GameStateContext = React.createContext<GameStateInterface>({} as GameStateInterface);
 
 const countdownTime = 15; //how long the game lasts - in seconds
 const dotSize = 75; //how big the pokebutton should be
 
-const GameStateProvider = ({ children }) => {
-  const { soundEnabled, playCheer, playBell, setBubblePlayback } =
+const GameStateProvider: React.FC<Props> = ({ children }) => {
+  const { soundEnabled, playCheer, playBell } =
     React.useContext(SoundsContext);
-  const [count, setCount] = React.useState(0);
-  const [countdown, setCountdown] = React.useState(countdownTime);
-  const [isRunning, setIsRunning] = React.useState(false);
+  const [count, setCount] = React.useState<number>(0);
+  const [countdown, setCountdown] = React.useState<number>(countdownTime);
+  const [isRunning, setIsRunning] = React.useState<boolean>(false);
 
   useInterval(
     () => {
@@ -23,7 +39,7 @@ const GameStateProvider = ({ children }) => {
         setIsRunning(false);
       }
     },
-    isRunning ? 1000 : null
+    isRunning ? (1000) : (null)
   ); //if the game is running, decrement counter every 1,000 ms
 
   React.useEffect(() => {

@@ -6,7 +6,10 @@ import "./index.css";
 import { SoundsProvider } from "./contexts/SoundsContext";
 import { GameStateProvider } from "./contexts/GameStateContext";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+root.render(
   <React.StrictMode>
     <ChakraProvider>
       <SoundsProvider>

@@ -3,6 +3,8 @@
 A game for my three-year-old, first version made in less than a day.
 See current build here: https://25747.github.io
 
+Started in Javascript and then converted to Typescript (my first TS project)
+
 ## Libraries used
 
 Chakra UI, one of my favorite React UI libraries. Simple, effective components, with plenty of customizability. For the current state of the game a UI framework is almost certainly overkill, but Chakra is so nice to use and it doesn't add too much unneeded complexity.

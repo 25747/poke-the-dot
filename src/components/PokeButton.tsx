@@ -4,7 +4,11 @@ import { GameStateContext } from "../contexts/GameStateContext";
 import { SoundsContext } from "../contexts/SoundsContext";
 import getRandomNumber from "../utils/getRandomNumber";
 
-const PokeButton = ({ dimensions }) => {
+type Props= {
+  dimensions: any
+}
+
+const PokeButton: React.FC<Props> = ({ dimensions }) => {
   const { count, setCount, countdown, isRunning, setIsRunning, dotSize } =
     React.useContext(GameStateContext);
   const { playBubble, setBubblePlayback, soundEnabled } =

@@ -1,8 +1,8 @@
 import * as React from "react";
 
-const useLocalStorage = (key, initialValue) => {
+const useLocalStorage = (key: string, initialValue: any) => {
   const [storedValue, setStoredValue] = React.useState(() => {
-    if (window === "undefined") {
+    if (window === undefined) {
       //test if in browser
       return initialValue;
     }
@@ -19,14 +19,14 @@ const useLocalStorage = (key, initialValue) => {
   });
 
   //return different setValue function, that also persists to localstorage
-  const setValue = (value) => {
+  const setValue = (value: any) => {
     try {
       //check if value is a function, like: setState((current) => !current)
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
       // save to state, then save to storage
-      if (window !== "undefined") {
+      if (window !== undefined) {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
       }
     } catch (error) {

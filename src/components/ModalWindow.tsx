@@ -8,7 +8,6 @@ import {
   ModalOverlay,
   ModalBody,
   Text,
-  Spacer,
   Box,
 } from "@chakra-ui/react";
 import { GameStateContext } from "../contexts/GameStateContext";
@@ -31,12 +30,11 @@ const ModalWindow = () => {
   }; //restart the game at initial conditions
 
   return (
-    <Modal isOpen={!isRunning}>
+    <Modal isOpen={!isRunning} onClose={()=>{}}>
       <ModalOverlay />
       <ModalContent bg="gray.200">
         <ModalHeader
           display="flex"
-          align="center"
           justifyContent="space-around"
         >
           <Box w="40px" />

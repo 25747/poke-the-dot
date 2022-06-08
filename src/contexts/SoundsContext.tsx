@@ -1,15 +1,32 @@
 import * as React from "react";
 import useSound from "use-sound";
 import useLocalStorage from "../hooks/useLocalStorage";
+//@ts-ignore
 import bubbleSound from "../sounds/bubble.wav";
-import cheerSound from "../sounds/cheer.wav";
+//@ts-ignore
+import cheerSound  from "../sounds/cheer.wav";
+//@ts-ignore
 import bellSound from "../sounds/bell.wav";
+import { Dispatch } from "react";
+
+interface SoundsInterface {
+  playBubble:() => void,
+  playCheer:() => void,
+  playBell:() => void,
+  setBubblePlayback: Dispatch<React.SetStateAction<number>>,
+  soundEnabled: boolean,
+  setsoundEnabled: Dispatch<React.SetStateAction<boolean>>,
+}
+
+type Props = {
+  children?: React.ReactNode
+};
 
 const soundKey = "pokesoundEnabled";
 
-const SoundsContext = React.createContext();
+const SoundsContext = React.createContext<SoundsInterface>({} as SoundsInterface);
 
-const SoundsProvider = ({ children }) => {
+const SoundsProvider: React.FC<Props> = ({ children }) => {
   const [soundEnabled, setsoundEnabled] = useLocalStorage(soundKey, false);
   const [bubblePlayback, setBubblePlayback] = React.useState(0.5);
   const [playBubble, { stop: stopBubble }] = useSound(bubbleSound, {

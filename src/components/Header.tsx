@@ -1,10 +1,10 @@
 import { HStack, Text } from "@chakra-ui/react";
-import { useContext } from "react";
+import * as React from "react";
 import { GameStateContext } from "../contexts/GameStateContext";
 import MuteButton from "./MuteButton";
 
 const Header = () => {
-  const { countdown } = useContext(GameStateContext);
+  const { countdown } = React.useContext(GameStateContext);
   return (
     <HStack
       position="relative"
